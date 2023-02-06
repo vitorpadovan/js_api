@@ -10,11 +10,19 @@
 | fa_db_serv    | Servidor de banco de dados                     |
 | fa_db_user    | Usuário do banco de dados                      |
 
-## 2. Certificado digital
+## 2. Endpoints/links úteis
+
+| Link                                                   | Finalidade                    | Vari
+| ------------------------------------------------------ | ----------------------------- |
+| [Swagger](http://localhost:8080/swagger-ui/index.html) | Swagger com os endpoints      |
+| [Dev](http://localhost:8080/dev)                       | Adicionar novo usuario em dev |
+| [Login](http://localhost:8080/login)                       | Adicionar novo usuario em dev |
+
+## 3. Certificado digital
 
 Em desenvolvimento
 
-## 3. Execução
+## 4. Execução
 
 ```
 java -jar <app>.jar
