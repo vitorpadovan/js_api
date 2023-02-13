@@ -8,24 +8,27 @@ import org.springframework.stereotype.Component;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.extern.log4j.Log4j2;
 
 @Component
+@Log4j2
 public class JWTUtil {
 
-	@Value("${jwt.secret}")
-	private String secret;
+	private String secret = "vitor";
 
 	@Value("${jwt.expiration}")
 	private Long tempo;
 
 
 	public String generateToken(String username) {
+		log.info("Encriptando: " + secret);
 		return Jwts.builder().setSubject(username).setExpiration(new Date(System.currentTimeMillis() + tempo))
 				.signWith(SignatureAlgorithm.HS512, secret.getBytes()).compact();
 	}
 
 	public boolean tokenValido(String token) {
 		Claims claims = getClaims(token);
+		log.info("Validando o token");
 		if (claims != null) {
 			String username = claims.getSubject();
 			Date expirationDate = claims.getExpiration();
@@ -49,6 +52,7 @@ public class JWTUtil {
 		try {
 			return Jwts.parser().setSigningKey(secret.getBytes()).parseClaimsJws(token).getBody();
 		} catch (Exception e) {
+			log.error(e.getMessage());
 			return null;
 		}
 	}

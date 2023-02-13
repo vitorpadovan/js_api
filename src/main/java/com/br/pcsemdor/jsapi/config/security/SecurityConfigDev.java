@@ -30,7 +30,7 @@ public class SecurityConfigDev extends WebSecurityConfigurerAdapter {
 
 	private String[] PUBLIC_GET = { "/API/EVENTOS", "/API/MISSOES" };
 
-	private String[] PUBLIC_POST = { "/dev" };
+	private String[] PUBLIC_POST = { "/dev", "/api/evento", "/api/evento/imagem" };
 
 
 	public SecurityConfigDev(

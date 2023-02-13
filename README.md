@@ -27,3 +27,6 @@ Em desenvolvimento
 ```
 java -jar <app>.jar
 ```
+
+## 5. Referêncuas
+[Spring Boot: Upload and Download Images using JPA](https://medium.com/shoutloudz/spring-boot-upload-and-download-images-using-jpa-b1c9ef174dc0)
