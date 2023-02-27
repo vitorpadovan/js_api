@@ -14,7 +14,7 @@
 	<name>JS-Api</name>
 	<description>Spring Security exemple project</description>
 	<properties>
-		<java.version>19</java.version>
+		<java.version>18</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
