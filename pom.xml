@@ -75,6 +75,7 @@
 	</dependencies>
 
 	<build>
+		<finalName>JovensSaradosApi</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

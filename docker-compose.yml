@@ -1,0 +1,25 @@
+version: '3.3'
+services:
+  apiservice:
+    build: .
+    container_name: js_api
+    depends_on:
+      - postgressrv
+    ports:
+      - '8080:8080'
+    environment:
+      - fa_db_serv=postgressrv
+      - 'fa_db_user=${USUARIO}'
+      - 'fa_db_pass=${SENHA}'
+      - 'fa_db_data=${BANCO}'
+  postgressrv:
+    image: 'postgres:latest'
+    container_name: js_db
+    ports:
+      - '5432:5432'
+    environment:
+      - 'POSTGRES_PASSWORD=${SENHA}'
+      - 'POSTGRES_USER=${USUARIO}'
+      - 'POSTGRES_DB=${BANCO}'
+    volumes:
+      - '/home/ubuntu/data:/var/lib/postgresql/data'
