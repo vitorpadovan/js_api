@@ -12,11 +12,11 @@
 
 ## 2. Endpoints/links úteis
 
-| Link                                                   | Finalidade                    | Vari
-| ------------------------------------------------------ | ----------------------------- |
-| [Swagger](http://localhost:8080/swagger-ui/index.html) | Swagger com os endpoints      |
-| [Dev](http://localhost:8080/dev)                       | Adicionar novo usuario em dev |
-| [Login](http://localhost:8080/login)                       | Adicionar novo usuario em dev |
+| Link                                                   | Finalidade                    |  Variável |
+| ------------------------------------------------------ | ----------------------------- | --------- |
+| [Swagger](http://localhost:8080/swagger-ui/index.html) | Swagger com os endpoints      | --------- |
+| [Dev](http://localhost:8080/dev)                       | Adicionar novo usuario em dev | --------- |
+| [Login](http://localhost:8080/login)                   | Adicionar novo usuario em dev | --------- |
 
 ## 3. Certificado digital
 
