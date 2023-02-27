@@ -4,22 +4,29 @@ services:
     build: .
     container_name: js_api
     depends_on:
-      - postgressrv
+      postgressrv:
+        condition: service_healthy
     ports:
       - '8080:8080'
     environment:
-      - fa_db_serv=postgressrv
+      - 'fa_db_serv=postgressrv'
       - 'fa_db_user=${USUARIO}'
       - 'fa_db_pass=${SENHA}'
       - 'fa_db_data=${BANCO}'
+      - 'SPRING_PROFILES_ACTIVE=dev'
   postgressrv:
-    image: 'postgres:latest'
+    image: 'postgres:alpine'
     container_name: js_db
     ports:
       - '5432:5432'
     environment:
       - 'POSTGRES_PASSWORD=${SENHA}'
       - 'POSTGRES_USER=${USUARIO}'
-      - 'POSTGRES_DB=${BANCO}'
+      - 'POSTGRES_DB=${BANCO}'     
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 5s
+      timeout: 10s
+      retries: 15
     volumes:
       - '/home/ubuntu/data:/var/lib/postgresql/data'
