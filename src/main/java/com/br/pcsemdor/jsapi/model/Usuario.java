@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -40,8 +41,10 @@ public class Usuario implements UserDetails {
 
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(
-			name = "JTUsuarioPerfil", joinColumns = @JoinColumn(name = "idUsuario"), inverseJoinColumns = @JoinColumn(
-					name = "idPeril"
+			name = "JTUsuarioPerfil", joinColumns = @JoinColumn(
+					name = "idUsuario", foreignKey = @ForeignKey(name = "fk_JTUsuarioPerfil_idUsuario")
+			), inverseJoinColumns = @JoinColumn(
+					name = "idPeril", foreignKey = @ForeignKey(name = "fk_JTUsuarioPerfil_idPeril")
 			)
 	)
 	private List<PerfilUsuario> perfis;

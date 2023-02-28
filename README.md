@@ -30,3 +30,5 @@ java -jar <app>.jar
 
 ## 5. Referêncuas
 [Spring Boot: Upload and Download Images using JPA](https://medium.com/shoutloudz/spring-boot-upload-and-download-images-using-jpa-b1c9ef174dc0)
+[Tratamento de erros personalizados para APIs rest com Spring Boot.](https://dev.to/ledsonsilva/tratamento-de-erros-personalizados-para-apis-rest-com-spring-boot-4dpd)
+[Tratamento de erros personalizados para APIs rest com Spring Boot. - GIT](https://github.com/ledsonsilva/spring-boot-custom-exceptions)

@@ -1,20 +1,26 @@
 package com.br.pcsemdor.jsapi.controller;
 
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
+import java.util.List;
+
+import javax.validation.Valid;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.br.pcsemdor.jsapi.business.EventoBusiness;
 import com.br.pcsemdor.jsapi.contracts.request.EventoRequest;
 import com.br.pcsemdor.jsapi.model.Evento;
 
+import lombok.extern.log4j.Log4j2;
+
 @RestController
 @RequestMapping("/api/evento")
+@Log4j2
 public class EventoController {
 
 	private EventoBusiness _business;
@@ -26,19 +32,16 @@ public class EventoController {
 		this._business = evento;
 	}
 
-	@GetMapping("/imagem")
-	public ResponseEntity<?> imagem() {
-		try {
-			byte[] image = _business.getImage(4);
-			return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.valueOf("image/png")).body(image);
-		} catch (NotFoundException ex) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-		}
+	@PostMapping
+	public ResponseEntity<Evento> salvarEvento(@RequestPart(name = "file", required = false) MultipartFile file,
+			@Valid EventoRequest request) {
+		log.info(request.toString());
+		var response = _business.salvarEvento(request, file);
+		return ResponseEntity.ok(response);
 	}
 
-	@PostMapping
-	public ResponseEntity<Evento> salvarEvento(EventoRequest file) {
-		var response = _business.salvarEvento(file);
-		return ResponseEntity.ok(response);
+	@GetMapping
+	public ResponseEntity<List<Evento>> getEventos() {
+		return ResponseEntity.ok(this._business.getEventos());
 	}
 }
