@@ -28,7 +28,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	private JWTUtil jwtUtil;
 
-	private String[] PUBLIC_GET = { "/api/eventos", "/api/missoes" };
+	private String[] PUBLIC_GET = { "/api/evento", "/api/evento/imagem/**", "/api/missao" };
 
 	private String[] PUBLIC_POST = {};
 
