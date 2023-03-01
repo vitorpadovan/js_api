@@ -3,18 +3,20 @@ package com.br.pcsemdor.jsapi.business;
 import java.io.IOException;
 import java.sql.Date;
 import java.time.Instant;
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
 
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.br.pcsemdor.jsapi.contracts.request.EventoRequest;
 import com.br.pcsemdor.jsapi.model.Evento;
+import com.br.pcsemdor.jsapi.model.Missao;
 import com.br.pcsemdor.jsapi.repo.EventoRepo;
+import com.br.pcsemdor.jsapi.repo.MissaoRepo;
 import com.br.pcsemdor.jsapi.util.ImageUtil;
 
 import lombok.extern.log4j.Log4j2;
@@ -25,11 +27,15 @@ public class EventoBusiness extends BaseBusiness {
 
 	private EventoRepo _repo;
 
+	private MissaoRepo _repoMissao;
+
 
 	public EventoBusiness(
-			EventoRepo _repo) {
+			EventoRepo _repo,
+			MissaoRepo _repoMissao) {
 		super();
 		this._repo = _repo;
+		this._repoMissao = _repoMissao;
 	}
 
 	public Evento salvarEvento(EventoRequest request, MultipartFile arquivo) {
@@ -49,13 +55,22 @@ public class EventoBusiness extends BaseBusiness {
 		// var user = this.getUser();
 		tratarData(evento.getDataPublicacao(), "Data de publicacao", true);
 		tratarData(evento.getDataEvento(), "Data de evento", false);
+		var missao = requisitarMissao(evento.getIdMissao());
 		var e = new Evento();
+		e.setMissao(missao);
 		e.setNomeEvento(evento.getNomeEvento());
 		e.setSaveTheDate(evento.isSaveTheDate());
 		e.setDataEvetno(evento.getDataEvento());
 		e.setDataPublicacao(evento.getDataPublicacao());
 		tratarImagem(arquivo, e);
 		return e;
+	}
+
+	private Missao requisitarMissao(Integer idMissao) {
+		var missao = this._repoMissao.findById(idMissao);
+		if (!missao.isPresent())
+			throw new RuntimeException("Missão de id " + idMissao + " não foi encontrada");
+		return missao.get();
 	}
 
 	public List<Evento> getEventos() {
@@ -85,12 +100,19 @@ public class EventoBusiness extends BaseBusiness {
 	}
 
 	@Transactional
-	public byte[] getImage(int i) throws NotFoundException {
+	public byte[] getImage(int i) {
 		Optional<Evento> dbImage = _repo.findById(i);
 		if (dbImage.isPresent()) {
 			byte[] image = ImageUtil.decompressImage(dbImage.get().getImageData());
 			return image;
 		}
-		throw new NotFoundException();
+		throw new RuntimeException("Id não tem imagem");
+	}
+
+	public String teste2(int i) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("data:image/png;base64,");
+		sb.append(new String(Base64.getEncoder().encode(getImage(i))));
+		return sb.toString();
 	}
 }
